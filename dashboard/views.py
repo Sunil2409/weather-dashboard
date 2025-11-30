@@ -3,6 +3,11 @@ from django.conf import settings
 
 from .utils import fetch_weather, fetch_air_quality
 
+import os
+
+api_key = os.getenv("OPENWEATHER_API_KEY")
+
+
 
 def home(request):
     """

@@ -20,12 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-)g8)uju0i_t0re5e&#dj&6ka2l78!puh(s4km1mgb(5iw7^9tz"
+import os
+
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -48,6 +50,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "weatherapp.urls"
@@ -125,3 +128,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # OpenWeather API Key
 OPENWEATHER_API_KEY = "ff1a9f450a46828bbcfc75b2bfa76e1a"
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
