@@ -1,5 +1,8 @@
 import requests
 from typing import Dict
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def fetch_weather(city: str, api_key: str) -> Dict:
@@ -23,8 +26,9 @@ def fetch_weather(city: str, api_key: str) -> Dict:
         response.raise_for_status()
         return response.json()
 
-    except requests.RequestException:
-        return {"error": "Unable to fetch weather data. Please try again."}
+    except requests.RequestException as e:
+        logger.error(f"Error fetching weather data for {city}: {e}")
+        return {"error": "Unable to fetch weather data. Please try again later."}
     
 def fetch_air_quality(lat: float, lon: float, api_key: str) -> Dict:
     """
@@ -48,6 +52,7 @@ def fetch_air_quality(lat: float, lon: float, api_key: str) -> Dict:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
         return response.json()
-    except requests.RequestException:
+    except requests.RequestException as e:
+        logger.error(f"Error fetching air quality data for coords ({lat}, {lon}): {e}")
         return {"error": "Unable to fetch air quality data."}
 
